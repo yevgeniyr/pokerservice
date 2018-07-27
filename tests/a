@@ -1,0 +1,7 @@
+import json
+
+
+text = '{ "a" : "b" }'
+json_object = json.loads(text)
+print(type(json_object).__name__)
+

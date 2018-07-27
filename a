@@ -1,0 +1,3 @@
+import card
+
+print((card.ALL_CARDS))
