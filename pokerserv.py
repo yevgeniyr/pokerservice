@@ -1,6 +1,16 @@
+import copy
+import json
 import argparse
 from aiohttp import web
-import card
+import besthandchooser
+import pokerhand
+import pokerdeck
+
+class PEncoder(json.JSONEncoder):
+    def default(self,obj):
+        if isinstance(obj,pokerhand.Hand):
+            return str(obj)
+        return json.JSONEncoder.default(self,obj)
 
 async def besthand_route(request):
     data = await request.json()
@@ -8,13 +18,19 @@ async def besthand_route(request):
     response_hands = []
 
     for hand_n_deck in data['hand_n_deck_data']:
-        best_hand = card.best_hand(hand_n_deck) 
+        hand = pokerhand.Hand.from_string(hand_n_deck['hand'])
+        deck = pokerdeck.Deck.from_string(hand_n_deck['deck']) 
 
-        response_hands.append( { 'hand' : hand_n_deck['hand'] , 
-                                 'deck' : hand_n_deck['deck'] , 
-                                 'best_hand' : best_hand } )
+        best_hand_chooser = besthandchooser.BestHandChooser(hand,deck)
 
-    return web.json_response( { 'hands' : response_hands })
+        best_hand = best_hand_chooser.get_best_hand()
+
+        response_hands.append({ 'hand' : hand_n_deck['hand'] , 
+                                'deck' : hand_n_deck['deck'] , 
+                                'best_hand' : best_hand })
+
+    ret = {'hands' : response_hands}
+    return web.json_response(text=json.dumps(ret, cls=PEncoder))
 
 
 def get_args(): 
@@ -28,5 +44,4 @@ if __name__ == "__main__":
     app.add_routes([web.post('/besthand', besthand_route)])
     args = get_args()
     web.run_app(app, port=args.port)
-
 

@@ -1,0 +1,4 @@
+{
+  "pokerserv_test.py::test_best_hands": true,
+  "run_test.py::test_best_hands": true
+}
