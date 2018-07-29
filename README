@@ -4,6 +4,7 @@ a top 5 cards from a deck.  It returns the best possible card under the rules of
 The problem description was taken from hackerank.com.  The hackerank's chanllege asked to implement an algorithm for finding the best possible hand.  This project implements the 5-card draw algorithm and puts a microservice on top of it.
 
 All the data exchanges between the client and the microservice is done using JSON formatted data. 
+
 This is an example of the input data :
 
 { "hand_n_deck_data" : [
@@ -18,8 +19,14 @@ This is an example of the input data :
    { "hand" : "3D 5S 2H QD TD", "deck" : "6S KH 9H AD QH" }]
 }
 
+To see the server in action : 
+make start_server
+
+then 
+curl -H "Content-Type: application/json" --data @testdata http://localhost:8080/besthand | python3.6 -m json.tool
 
 
+Description of the hackerrank challenge :
 
 The Psychic Poker Player
     

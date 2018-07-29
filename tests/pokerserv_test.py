@@ -1,6 +1,7 @@
 import subprocess
 import requests
 import time
+import json
 
 port = '8080'
 server_process = None 
@@ -11,7 +12,7 @@ def start_server():
     print(server)
     global server_process
     server_process = subprocess.Popen(server)
-    time.sleep(3)
+    time.sleep(1)
 
 
 def stop_server():
@@ -39,7 +40,7 @@ def test_best_hands():
         { 'hand' : '3D 5S 2H QD TD', 'deck' :   '6S KH 9H AD QH', 'ranking' : 'highest-card'}
     ] }
 
-    r = requests.post('http://localhost:{port}/besthand'.format(port=port), hand_n_deck_input ) 
+    r = requests.post('http://localhost:{port}/besthand'.format(port=port), json=hand_n_deck_input ) 
     assert r.status_code == 200
     assert json.loads(r.text)
 

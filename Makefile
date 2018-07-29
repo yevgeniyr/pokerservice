@@ -3,7 +3,7 @@ init:
 
 
 test:
-	python3.6 -m pytest tests/
+	cd tests; PYTHONPATH=.. python3.6 -m pytest
 
 
 start_server:
