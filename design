@@ -1,8 +1,0 @@
-An http client uses POST method to submit a hand and a deck data to the RESTFul async microservice.
-The microservice figures out the best possible hand from the given hand and top 5 cards on the deck and
-returns an answer in JSON format.
-
-
-
-
-
