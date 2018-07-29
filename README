@@ -1,7 +1,8 @@
 Abstract:
     This project implements an asynchronous microservice. The microservice provides a RESTFul API that accepts a hand of 5 cards and 
 a top 5 cards from a deck.  It returns the best possible card under the rules of 5-card draw poker described bellow. 
-The problem description was taken from hackerank.com.  The hackerank's chanllege asked to implement an algorithm for finding the best possible hand.  This project implements the 5-card draw algorithm and puts a microservice on top of it.
+The problem description was taken from hackerrank.com.  The hackerrank's chanllege asked to implement an algorithm for finding 
+the best possible hand.  This project implements the 5-card draw algorithm and puts a microservice on top of it.
 
 All the data exchanges between the client and the microservice is done using JSON formatted data. 
 
@@ -19,12 +20,47 @@ This is an example of the input data :
    { "hand" : "3D 5S 2H QD TD", "deck" : "6S KH 9H AD QH" }]
 }
 
+Sample Output :
+{
+    "hands": [
+        {
+            "hand": "TH JH QC QD QS",
+            "deck": "QH KH AH 2S 6S",
+            "best_hand": "Hand : TH JH AH KH QH\nRanking : straight-flush\n"
+        },
+        {
+            "hand": "2H 2S 3H 3S 3C",
+            "deck": "2D 3D 6C 9C TH",
+            "best_hand": "Hand : 3D 2D 3H 3S 3C\nRanking : four-of-a-kind\n"
+        },
+        {
+            "hand": "2H 2S 3H 3S 3C",
+            "deck": "2D 9C 3D 6C TH",
+            "best_hand": "Hand : 2H 2S 3H 3S 2D\nRanking : full-house\n"
+        },
+] } 
+
 To see the server in action : 
 make start_server
 
 then 
 curl -H "Content-Type: application/json" --data @testdata http://localhost:8080/besthand | python3.6 -m json.tool
 
+
+Makefile is provided to simplifier running common tasks.
+
+Run 
+make test
+
+to run tests
+
+
+
+Requirements :
+python3.6
+aiohttp
+pytest
+requests
 
 Description of the hackerrank challenge :
 
