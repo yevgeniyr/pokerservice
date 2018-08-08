@@ -12,8 +12,18 @@ class PEncoder(json.JSONEncoder):
             return str(obj)
         return json.JSONEncoder.default(self,obj)
 
-async def besthand_route(request):
-    data = await request.json()
+def prehandler(handler):
+    async def new_handler(request):
+        try:
+            data = await request.json()
+        except Exception as e:
+            return web.json_response(status=400,text=json.dumps({ 'status' : 'error' }))
+        return await handler(data)
+
+    return new_handler
+
+@prehandler
+async def besthand_route(data):
 
     response_hands = []
 
