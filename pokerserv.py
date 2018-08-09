@@ -2,6 +2,7 @@ import copy
 import json
 import argparse
 from aiohttp import web
+import settings
 import besthandchooser
 import pokerhand
 import pokerdeck
@@ -50,8 +51,10 @@ def get_args():
     return args
 
 if __name__ == "__main__":
+    settings.init()
     app = web.Application()
     app.add_routes([web.post('/besthand', besthand_route)])
     args = get_args()
-    web.run_app(app, port=args.port)
+    port = args.port if args.port else settings.config['network']['serverport']
+    web.run_app(app, port=port)
 
