@@ -40,7 +40,7 @@ def test_best_hands():
         { 'hand' : '3D 5S 2H QD TD', 'deck' :   '6S KH 9H AD QH', 'ranking' : 'highest-card'}
     ] }
 
-    r = requests.post('http://localhost:{port}/besthand'.format(port=port), json=hand_n_deck_input ) 
+    r = requests.get('http://localhost:{port}/besthand'.format(port=port), json=hand_n_deck_input ) 
     assert r.status_code == 200
     assert json.loads(r.text)
 
