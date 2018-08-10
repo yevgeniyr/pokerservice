@@ -11,6 +11,10 @@ start:
 
 stop:
 	PYTHONPATH=. python3.6 ./bin/stop_server.py 
+
+
+restart: stop start
+    
     
     
 .PHONY: init test start

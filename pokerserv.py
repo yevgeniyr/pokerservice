@@ -28,6 +28,12 @@ def prehandler(handler):
     return new_handler
 
 
+async def healthcheck_route(data):
+    # would access database routes here in real app
+    ret = { 'status' : 'doing fine thank you' }
+    return web.json_response(text=json.dumps(ret, cls=PEncoder))
+
+
 @prehandler
 async def besthand_route(data):
 
@@ -81,6 +87,7 @@ if __name__ == "__main__":
     settings.init()
     exit_if_still_running()
     app = web.Application()
+    app.add_routes([web.get('/healthcheck', healthcheck_route)])
     app.add_routes([web.get('/besthand', besthand_route)])
     args = get_args()
     port = args.port if args.port else settings.config['server']['port']
