@@ -6,7 +6,11 @@ test:
 	cd tests; PYTHONPATH=.. python3.6 -m pytest
 
 
-start_server:
+start:
 	python3.6 pokerserv.py &
+
+stop:
+	PYTHONPATH=. python3.6 ./bin/stop_server.py 
     
-.PHONY: init test start_server
+    
+.PHONY: init test start
